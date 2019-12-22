@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Demo upload và Crop hình ảnh</title>
+</head>
+<body>
+    <h1>Upload và Resize hình ảnh</h1>
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div>
+            @Html.Raw(ViewBag.Error)
+        </div>
+    }
+    @if (ViewBag.Files != null)
+    {
+        <ul>
+            @foreach (var file in ViewBag.Files)
+            {
+                <li>@Html.Raw(file)</li>
+            }
+        </ul>
+    }
+    <div>
+        @using (Html.BeginForm("UploadCrop", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <p>Chọn file upload: <input type="file" name="file" /></p>
+            <h4>Kích thước crop</h4>
+            <p>Width: @Html.TextBox("width", "", new { @type = "number", min = "10" })</p>
+            <p>Height: @Html.TextBox("height", "", new { @type = "number", min = "10" })</p>
+            <p><button type="submit">Upload và Crop hình</button></p>
+        }
+    </div>
+</body>
+</html>
